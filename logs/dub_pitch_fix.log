@@ -1,0 +1,13 @@
+=== movie_dubbed_1min_v7.mp4 ===
+Synthesizing 17 lines with 4 concurrent TTS tasks...
+Skipped 2 vocal filler line(s) (no TTS).
+TTS complete: 15 clips.
+Mixing audio (60.018s) then muxing with original video (stream copy — no video re-encode)...
+Saved: /home/s/Projects/python/products/automation/movie_dubbed_1min_v7.mp4
+=== movie_dubbed_5min_v7.mp4 ===
+Synthesizing 80 lines with 4 concurrent TTS tasks...
+Skipped 30 vocal filler line(s) (no TTS).
+TTS complete: 50 clips.
+Mixing audio (300.011s) then muxing with original video (stream copy — no video re-encode)...
+Saved: /home/s/Projects/python/products/automation/movie_dubbed_5min_v7.mp4
+All done

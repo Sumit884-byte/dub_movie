@@ -1,0 +1,36 @@
+Traceback (most recent call last):
+  File "<string>", line 13, in <module>
+    master_final_video(
+    ~~~~~~~~~~~~~~~~~~^
+        Path('movie_300s.mp4'), clips, output,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        Path('movie_300s.background.wav'), default_workers(), state, force=True,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/s/Projects/python/products/automation/dub_movie.py", line 559, in master_final_video
+    clip.close()
+    ~~~~~~~~~~^^
+  File "/home/s/Projects/python/products/automation/.venv/lib/python3.14/site-packages/moviepy/audio/io/AudioFileClip.py", line 84, in close
+    self.reader.close()
+    ~~~~~~~~~~~~~~~~~^^
+  File "/home/s/Projects/python/products/automation/.venv/lib/python3.14/site-packages/moviepy/audio/io/readers.py", line 296, in close
+    self.proc.terminate()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/subprocess.py", line 2252, in terminate
+    self.send_signal(signal.SIGTERM)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 2244, in send_signal
+    os.kill(self.pid, sig)
+    ~~~~~~~^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied
+Resuming TTS: 80/80 chunks already on disk.
+TTS complete: 80 clips.
+Mixing audio (300.011s) then muxing with original video (stream copy — no video re-encode)...
+Exception ignored while calling deallocator <function FFMPEG_AudioReader.__del__ at 0x79d16f38c7d0>:
+Traceback (most recent call last):
+  File "/home/s/Projects/python/products/automation/.venv/lib/python3.14/site-packages/moviepy/audio/io/readers.py", line 304, in __del__
+  File "/home/s/Projects/python/products/automation/.venv/lib/python3.14/site-packages/moviepy/audio/io/readers.py", line 296, in close
+  File "/usr/lib/python3.14/subprocess.py", line 2252, in terminate
+  File "/usr/lib/python3.14/subprocess.py", line 2244, in send_signal
+PermissionError: [Errno 13] Permission denied

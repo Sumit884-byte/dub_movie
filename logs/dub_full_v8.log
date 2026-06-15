@@ -1,0 +1,163 @@
+Pipeline: SRT timing only (exact subtitle sync, vocal-free bed + dub)
+Workers: 4 | Duration: Nones | Whisper model: base
+Translation: minimax
+Parsed 1927 SRT lines (exact subtitle timing).
+Pipeline: SRT timing only (exact subtitle sync, vocal-free bed + dub)
+Workers: 4 | Duration: Nones | Whisper model: base
+Translation: parallel
+Parsed 1927 SRT lines (exact subtitle timing).
+Pitch probe: 1927/1927 segments have F0 readings.
+Analyzing Japanese voice pitch per line...
+
+=== restart 2026-06-14T03:29:36+05:30 fresh=False ===
+Pipeline: SRT timing only (exact subtitle sync, vocal-free bed + dub)
+Workers: 4 | Duration: Nones | Whisper model: base
+Translation: parallel
+Parsed 1927 SRT lines (exact subtitle timing).
+Pitch probe: 1927/1927 segments have F0 readings.
+Analyzing Japanese voice pitch per line...
+Pitch analysis: 1927/1927 lines — ~318 higher-pitch, ~450 lower-pitch voices.
+Translating 1927 lines via parallel with context/tone (4 workers)...
+Parallel translation: 1562 lines -> minimax (781), google (781)
+Google retry 2/4 in 2.0s (えっ… -そんな… --> No translation was found using the current translator. Try another translator?)
+Minimax retry 2/4 in 2.0s (Expecting value: line 1 column 1 (char 0))
+Minimax retry 3/4 in 4.0s (Expecting value: line 1 column 1 (char 0))
+Minimax retry 4/4 in 8.0s (Expecting value: line 1 column 1 (char 0))
+Refilling 1 line(s) via google backup...
+Refilling 1 line(s) via minimax backup...
+Warning: 1 line(s) could not be translated after all backups.
+Translated 1583/1927
+WARNING: 1 line(s) failed all backends — no Hindi dub for those slots. Saved to translated_segments_full_v8.failed.json. Re-run the job later to retry them.
+Translation complete: 1583 lines dubbed, 1 failed (see translated_segments_full_v8.failed.json).
+Extracting 5.1 background (6ch, FC/dialogue omitted, music+SFX kept)...
+Synthesizing 1583 lines with 4 concurrent TTS tasks...
+Traceback (most recent call last):
+  File "/home/s/Projects/python/products/automation/dub_movie_full.py", line 11, in <module>
+    dub_with_whisper_alignment(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        input_video=Path("movie.mp4"),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<12 lines>...
+        use_vllm_speakers=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/s/Projects/python/products/automation/dub_movie_whisper.py", line 406, in dub_with_whisper_alignment
+    dubbed_clips = synthesize_dubbed_audio(
+        translated, chunks_dir, workers, state, target_language
+    )
+  File "/home/s/Projects/python/products/automation/dub_movie.py", line 445, in synthesize_dubbed_audio
+    asyncio.run(_synthesize_all(segments, chunks_dir, workers, target_language))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/usr/lib/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/usr/lib/python3.14/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/home/s/Projects/python/products/automation/dub_movie.py", line 391, in _synthesize_all
+    await asyncio.gather(
+    ...<4 lines>...
+    )
+  File "/home/s/Projects/python/products/automation/dub_movie.py", line 389, in run_one
+    await _synthesize_chunk(seg["text"], path, profile)
+  File "/home/s/Projects/python/products/automation/dub_movie.py", line 376, in _synthesize_chunk
+    await communicate.save(str(output_path))
+  File "/home/s/Projects/python/products/automation/.venv/lib/python3.14/site-packages/edge_tts/communicate.py", line 613, in save
+    async for message in self.stream():
+    ...<7 lines>...
+            metadata.write("\n")
+  File "/home/s/Projects/python/products/automation/.venv/lib/python3.14/site-packages/edge_tts/communicate.py", line 588, in stream
+    async for message in self.__stream():
+        yield message
+  File "/home/s/Projects/python/products/automation/.venv/lib/python3.14/site-packages/edge_tts/communicate.py", line 562, in __stream
+    raise NoAudioReceived(
+        "No audio was received. Please verify that your parameters are correct."
+    )
+edge_tts.exceptions.NoAudioReceived: No audio was received. Please verify that your parameters are correct.
+
+=== restart 2026-06-14T10:19:17+05:30 fresh=False (TTS retry fix) ===
+Pipeline: SRT timing only (exact subtitle sync, vocal-free bed + dub)
+Workers: 4 | Duration: Nones | Whisper model: base
+Translation: parallel
+Parsed 1927 SRT lines (exact subtitle timing).
+Pitch probe: 1927/1927 segments have F0 readings.
+Analyzing Japanese voice pitch per line...
+Pitch analysis: 1927/1927 lines — ~318 higher-pitch, ~450 lower-pitch voices.
+Resuming translation: 1583 done, 344 remaining.
+Parallel translation: 1 lines -> minimax (1)
+Translated 1584/1927
+Translation complete: 1584 lines dubbed, 1 failed (see translated_segments_full_v8.failed.json).
+Using existing background audio: movie.background.wav
+Resuming TTS: 53/1584 chunks already on disk.
+TTS failed for 'chunk_347.013_352.185_unknown.mp3': No audio was received. Please verify that your parameters are correct.
+TTS failed for 'chunk_6265.092_6270.097_unknown.mp3': No audio was received. Please verify that your parameters are correct.
+Warning: 2 TTS line(s) failed — those slots will be silent.
+Traceback (most recent call last):
+  File "/home/s/Projects/python/products/automation/.venv/lib/python3.14/site-packages/moviepy/video/io/ffmpeg_reader.py", line 904, in ffmpeg_parse_infos
+    ).parse()
+      ~~~~~^^
+  File "/home/s/Projects/python/products/automation/.venv/lib/python3.14/site-packages/moviepy/video/io/ffmpeg_reader.py", line 606, in parse
+    if stream["stream_type"] not in self._default_streams:
+       ~~~~~~^^^^^^^^^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/s/Projects/python/products/automation/dub_movie_full.py", line 11, in <module>
+    dub_with_whisper_alignment(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        input_video=Path("movie.mp4"),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<12 lines>...
+        use_vllm_speakers=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/s/Projects/python/products/automation/dub_movie_whisper.py", line 406, in dub_with_whisper_alignment
+    cache_path=speaker_cache,
+       ^^^^^^^^^^^^^^^^^^^^^^
+    base_url=vllm_base_url,
+    ^^^^^^^^^^^^^^^^^^^^^^^
+    model=vllm_model,
+    
+  File "/home/s/Projects/python/products/automation/dub_movie.py", line 495, in synthesize_dubbed_audio
+    segments: list[dict],
+    
+  File "/home/s/Projects/python/products/automation/.venv/lib/python3.14/site-packages/decorator/__init__.py", line 247, in fun
+    return caller(func, *(extras + args), **kw)
+  File "/home/s/Projects/python/products/automation/.venv/lib/python3.14/site-packages/moviepy/decorators.py", line 102, in wrapper
+    return func(*new_args, **new_kwargs)
+  File "/home/s/Projects/python/products/automation/.venv/lib/python3.14/site-packages/moviepy/audio/io/AudioFileClip.py", line 65, in __init__
+    self.reader = FFMPEG_AudioReader(
+                  ~~~~~~~~~~~~~~~~~~^
+        filename,
+        ^^^^^^^^^
+    ...<3 lines>...
+        buffersize=buffersize,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/s/Projects/python/products/automation/.venv/lib/python3.14/site-packages/moviepy/audio/io/readers.py", line 60, in __init__
+    infos = ffmpeg_parse_infos(filename, decode_file=decode_file)
+  File "/home/s/Projects/python/products/automation/.venv/lib/python3.14/site-packages/moviepy/video/io/ffmpeg_reader.py", line 910, in ffmpeg_parse_infos
+    raise IOError(f"Error passing `ffmpeg -i` command output:\n\n{infos}") from exc
+OSError: Error passing `ffmpeg -i` command output:
+
+[mp3 @ 0x3df15dc0] Format mp3 detected only with low score of 1, misdetection possible!
+[mp3 @ 0x3df15dc0] Failed to find two consecutive MPEG audio frames.
+[in#0 @ 0x3df15ac0] Error opening input: Invalid data found when processing input
+Error opening input file temp_chunks_full_v8/chunk_347.013_352.185_unknown.mp3.
+Error opening input files: Invalid data found when processing input
+
+Exception ignored while calling deallocator <function FFMPEG_AudioReader.__del__ at 0x76c370a5f3d0>:
+Traceback (most recent call last):
+  File "/home/s/Projects/python/products/automation/.venv/lib/python3.14/site-packages/moviepy/audio/io/readers.py", line 304, in __del__
+    self.close()
+  File "/home/s/Projects/python/products/automation/.venv/lib/python3.14/site-packages/moviepy/audio/io/readers.py", line 294, in close
+    if self.proc:
+AttributeError: 'FFMPEG_AudioReader' object has no attribute 'proc'
